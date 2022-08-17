@@ -4,7 +4,17 @@ import React, { useContext } from 'react';
 import Layout from '../components/Layout';
 import { useRouter } from 'next/router';
 import { Store } from '../Contexts/Store';
-export default function CartScreen() {
+import dynamic from 'next/dynamic';
+/* 
+Şimdi server tarafında olşan datalar ile client tarafonda oluşan datalar arasında sıkıntılar oluyor .
+Hydration hatasu. 
+Bunu engellemek için bu sayfayı client side rendering olarak geliştirmemiz lazım öncelikle yapmamız gerken ilk işlem bu sayfayı dinamik olarak geliştirmek.
+Dinamik olarakg geliştirmek için next dynamic entegre edilmeli.
+*/
+
+
+
+ function CartScreen() {
   const router = useRouter();
   const { state, dispatch } = useContext(Store);
   const {
@@ -101,3 +111,5 @@ export default function CartScreen() {
     </Layout>
   );
 }
+
+export default dynamic(()=>Promise.resolve(CartScreen),{ssr:false});
