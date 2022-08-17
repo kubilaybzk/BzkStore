@@ -14,14 +14,14 @@ export default function LoginScreen() {
     console.log(email, password);
   };
 
-  
+
   return (
     <Layout title="Login">
       <form
         className="mx-auto max-w-screen-md"
         onSubmit={handleSubmit(submitHandler)}
       >
-        <h1 className="mb-4 text-xl">Login</h1>
+        <h1 className="mb-4 text-xl">Giriş Yap</h1>
         <div className="mb-4">
           <label htmlFor="email">Email</label>
           <input
@@ -42,7 +42,7 @@ export default function LoginScreen() {
           )}
         </div>
         <div className="mb-4">
-          <label htmlFor="password">Password</label>
+          <label htmlFor="password">Şifre</label>
           <input
             type="password"
             {...register("password", {
@@ -58,11 +58,11 @@ export default function LoginScreen() {
           )}
         </div>
         <div className="mb-4 ">
-          <button className="primary-button">Login</button>
+          <button className="primary-button">Giriş Yap</button>
         </div>
         <div className="mb-4 ">
-          Don&apos;t have an account? &nbsp;
-          <Link href="register">Register</Link>
+          Hesabınız yok mu ? 
+          <Link href="register"><span className="text-blue-500 ml-2 cursor-pointer">Hemen Kayıt Olun</span></Link>
         </div>
       </form>
     </Layout>
