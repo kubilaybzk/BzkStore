@@ -1,5 +1,5 @@
 import { createContext, useReducer, useState } from "react";
-
+import Cookies from "js-cookie";
 export const Store = createContext();
 
 //Sepet içinde hiçbir eleman yok başlangıçta .
@@ -30,6 +30,12 @@ function reducer(state, action) {
 
       return { ...state, cart: { ...state.cart, cartItems } };
     }
+    case "CART_REMOVE_ITEM":{
+      //Kaldırılacak eleman dışında olan bütün değerleri cartItems olmasını istedik..
+      const cartItems=state.cart.cartItems.filter(item=>item.slug!==action.payload.slug)
+      return{...state,cart:{...state.cart,cartItems}}
+    }
+
 
     default:
       return state;

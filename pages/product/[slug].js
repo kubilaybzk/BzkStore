@@ -20,7 +20,7 @@ export default function ProductScreen() {
   }
 
   const addToCartHandler = () => {
-    const existItem = state.cart.cartItems.find((findx) => x.slug === product.slug);
+    const existItem = state.cart.cartItems.find((x) => x.slug === product.slug);
     const quantity = existItem ? existItem.quantity + 1 : 1;
 
     if (product.countInStock < quantity) {
