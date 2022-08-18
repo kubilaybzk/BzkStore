@@ -29,10 +29,10 @@ Dinamik olarakg geliştirmek için next dynamic entegre edilmeli.
   };
   return (
     <Layout title="Shopping Cart">
-      <h1 className="mb-4 text-xl">Shopping Cart</h1>
+      <h1 className="mb-4 text-xl">Sepetim</h1>
       {cartItems.length === 0 ? (
         <div>
-          Cart is empty. <Link href="/">Go shopping</Link>
+          Sepetiniz boş. <Link href="/">Hemen Alışverişe başla</Link>
         </div>
       ) : (
         <div className="grid md:grid-cols-4 md:gap-5">
@@ -40,10 +40,10 @@ Dinamik olarakg geliştirmek için next dynamic entegre edilmeli.
             <table className="min-w-full ">
               <thead className="border-b">
                 <tr>
-                  <th className="p-5 text-left">Item</th>
-                  <th className="p-5 text-right">Quantity</th>
-                  <th className="p-5 text-right">Price</th>
-                  <th className="p-5">Action</th>
+                  <th className="p-5 text-left">Ürün</th>
+                  <th className="p-5 text-right">Adet</th>
+                  <th className="p-5 text-right">Fiyat</th>
+                  <th className="p-5">Sil</th>
                 </tr>
               </thead>
               <tbody>
@@ -92,8 +92,8 @@ Dinamik olarakg geliştirmek için next dynamic entegre edilmeli.
             <ul>
               <li>
                 <div className="pb-3 text-xl">
-                  Subtotal ({cartItems.reduce((a, c) => a + c.quantity, 0)}) : $
-                  {cartItems.reduce((a, c) => a + c.quantity * c.price, 0)}
+                  Toplam ({cartItems.reduce((a, c) => a + c.quantity, 0)}) : 
+                  {cartItems.reduce((a, c) => a + c.quantity * c.price, 0)}TL
                 </div>
               </li>
               <li>
@@ -101,7 +101,7 @@ Dinamik olarakg geliştirmek için next dynamic entegre edilmeli.
                   onClick={() => router.push('/login?redirect=/shipping')}
                   className="primary-button w-full"
                 >
-                  Check Out
+                 Ödeme Yap
                 </button>
               </li>
             </ul>
