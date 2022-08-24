@@ -2,7 +2,7 @@ import '../styles/globals.css';
 import { SessionProvider, useSession } from 'next-auth/react';
 import { StoreProvider } from '../Contexts/Store';
 import { useRouter } from 'next/router';
-
+import 'antd/dist/antd.css';
 function MyApp({ Component, pageProps: { session, ...pageProps } }) {
   return (
     <SessionProvider session={session}>

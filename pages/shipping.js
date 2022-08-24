@@ -15,11 +15,12 @@ export default function ShippingScreen() {
     setValue,
   } = useForm();
 
-  const { state, dispatch } = useContext(Store);
-  const { cart } = state;
-  const { shippingAddress } = cart;
+  const { state, dispatch } = useContext(Store); // Context yapımızdan dataları çekiyoruz.
+  const { cart } = state; //Context-state içinde bulunan state yapımızı kullanıyoruz.
+  const { shippingAddress } = cart; //Cart içinde bulunan shipping adres bizim için önemli.
   const router = useRouter();
 
+  //Bütün input değerlerini state içinde tutuyoruz.
   useEffect(() => {
     setValue('fullName', shippingAddress.fullName);
     setValue('address', shippingAddress.address);
@@ -33,6 +34,7 @@ export default function ShippingScreen() {
       type: 'SAVE_SHIPPING_ADDRESS',
       payload: { fullName, address, city, postalCode, country },
     });
+    //Cookies içine dataları tutuyoruz.
     Cookies.set(
       'cart',
       JSON.stringify({
@@ -132,5 +134,5 @@ export default function ShippingScreen() {
     </Layout>
   );
 }
-
+//Sadece giriş yapan kullancıların burayı görmesini istiyoruz.
 ShippingScreen.auth = true;

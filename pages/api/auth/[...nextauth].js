@@ -5,11 +5,14 @@ import User from '../../../models/User';
 import db from '../../../utils/db';
 
 export default NextAuth({
+  //ilk olarak bir kaç adet session ayarlamamız gerekiyor.
   session: {
     strategy: 'jwt',
   },
+  //
   callbacks: {
     async jwt({ token, user }) {
+      //user if ve admin mi kontrol ediyoruz.
       if (user?._id) token._id = user._id;
       if (user?.isAdmin) token.isAdmin = user.isAdmin;
       return token;

@@ -3,17 +3,14 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { useContext } from "react";
 import Layout from "../../components/Layout";
-import data from "../../utils/data";
-
 import { Store } from "../../Contexts/Store";
+import db from "../../utils/db";
+import Product from "../../models/Products";
 
-export default function ProductScreen() {
+export default function ProductScreen({product}) {
  
   const { state, dispatch } = useContext(Store);
   const { query } = useRouter();
-  const { slug } = query;
-
-  const product = data.products.find((x) => x.slug === slug);
 
   if (!product) {
     return <div>Produt Not Found</div>;
@@ -84,4 +81,20 @@ export default function ProductScreen() {
       </div>
     </Layout>
   );
+}
+
+export async function getServerSideProps(context) {
+  const { params } = context;
+  const { slug } = params;
+
+  await db.connect();
+  const product = await Product.findOne({ slug }).lean();
+  console.log("Product",product);
+  await db.disconnect();
+  return {
+    props: {
+      product: product ? db.convertDocToObj(product) : null,
+    },
+  };
+
 }
