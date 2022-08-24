@@ -6,26 +6,36 @@ import Layout from "../../components/Layout";
 import { Store } from "../../Contexts/Store";
 import db from "../../utils/db";
 import Product from "../../models/Products";
-
-export default function ProductScreen({product}) {
- 
+import Notfound from "../../components/Notfound";
+import axios from "axios";
+import { notification } from "antd";
+export default function ProductScreen({ product }) {
   const { state, dispatch } = useContext(Store);
-  const { query } = useRouter();
+  const router = useRouter();
 
   if (!product) {
-    return <div>Produt Not Found</div>;
+    return (
+      <Layout title={"Product not found"}>
+        <Notfound />
+      </Layout>
+    );
   }
 
-  const addToCartHandler = () => {
+  const addToCartHandler = async () => {
     const existItem = state.cart.cartItems.find((x) => x.slug === product.slug);
     const quantity = existItem ? existItem.quantity + 1 : 1;
+    const { data } = await axios.get(`/api/products/${product._id}`);
 
-    if (product.countInStock < quantity) {
-      alert("Sorry. Product is out of stock");
-      return;
+    if (data.countInStock < quantity) {
+      return notification.open({
+        message: 'Malesef bu kadar stoğumuz mevcut değil.',
+      });
     }
 
-    dispatch({ type: "CART_ADD_ITEM", payload: { ...product, quantity } });
+    dispatch({ type: 'CART_ADD_ITEM', payload: { ...product, quantity } });
+    notification.open({
+      message: 'Ürün sepetinize başarı ile eklendi.',
+    });
   };
 
   return (
@@ -89,12 +99,11 @@ export async function getServerSideProps(context) {
 
   await db.connect();
   const product = await Product.findOne({ slug }).lean();
-  console.log("Product",product);
+  console.log("Product", product);
   await db.disconnect();
   return {
     props: {
       product: product ? db.convertDocToObj(product) : null,
     },
   };
-
 }
