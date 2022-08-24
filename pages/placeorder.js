@@ -1,5 +1,6 @@
 import { notification } from "antd";
 import axios from "axios";
+import Cookies from "js-cookie";
 import { set } from "mongoose";
 import Image from "next/image";
 import Link from "next/link";
@@ -67,7 +68,7 @@ export default function PlaceOrderScreen() {
       notification.open({
         placement:"top",
         message: "Hata ! ",
-        description: "Verileri çekerken hata oluştu.",
+        description: getError(err),
       })
     }
   };
