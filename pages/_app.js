@@ -1,14 +1,16 @@
-import '../styles/globals.css';
-import { SessionProvider, useSession } from 'next-auth/react';
-import { StoreProvider } from '../Contexts/Store';
-import { useRouter } from 'next/router';
-import 'antd/dist/antd.css';
+import "../styles/globals.css";
+import { SessionProvider, useSession } from "next-auth/react";
+
+import { useRouter } from "next/router";
+
+import { StoreProvider } from "Contexts/Store";
+
 function MyApp({ Component, pageProps: { session, ...pageProps } }) {
   return (
     <SessionProvider session={session}>
       <StoreProvider>
         {Component.auth ? (
-          <Auth>
+          <Auth adminOnly={Component.auth.adminOnly}>
             <Component {...pageProps} />
           </Auth>
         ) : (
@@ -19,16 +21,19 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }) {
   );
 }
 
-function Auth({ children }) {
+function Auth({ children, adminOnly }) {
   const router = useRouter();
-  const { status } = useSession({
+  const { status, data: session } = useSession({
     required: true,
     onUnauthenticated() {
-      router.push('/unauthorized?message=Lütfen önce uygulamaya giriş yapın');
+      router.push("/unauthorized?message=login required");
     },
   });
-  if (status === 'loading') {
+  if (status === "loading") {
     return <div>Loading...</div>;
+  }
+  if (adminOnly && !session.user.isAdmin) {
+    router.push("/unauthorized?message=admin login required");
   }
 
   return children;
