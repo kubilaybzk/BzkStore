@@ -24,6 +24,7 @@ export default function Notfound() {
           width={"200px"}
           height={"200px"}
           layout="responsive"
+          alt="Not found"
         />
       </div>
     </div>
