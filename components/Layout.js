@@ -1,14 +1,14 @@
-import { signOut, useSession } from 'next-auth/react';
-import Head from 'next/head';
-import Link from 'next/link';
-import Cookies from 'js-cookie';
-import React, { useContext, useEffect, useState } from 'react';
-import { ToastContainer } from 'react-toastify';
-import { Menu } from '@headlessui/react';
-import 'react-toastify/dist/ReactToastify.css';
+import { signOut, useSession } from "next-auth/react";
+import Head from "next/head";
+import Link from "next/link";
+import Cookies from "js-cookie";
+import React, { useContext, useEffect, useState } from "react";
+import { ToastContainer } from "react-toastify";
+import { Menu } from "@headlessui/react";
+import "react-toastify/dist/ReactToastify.css";
 
-import DropdownLink from './DropdownLink';
-import { Store } from '../Contexts/Store';
+import DropdownLink from "./DropdownLink";
+import { Store } from "../Contexts/Store";
 
 export default function Layout({ title, children }) {
   const { status, data: session } = useSession();
@@ -21,14 +21,14 @@ export default function Layout({ title, children }) {
   }, [cart.cartItems]);
 
   const logoutClickHandler = () => {
-    Cookies.remove('cart');
-    dispatch({ type: 'CART_RESET' });
-    signOut({ callbackUrl: '/login' });
+    Cookies.remove("cart");
+    dispatch({ type: "CART_RESET" });
+    signOut({ callbackUrl: "/login" });
   };
   return (
     <>
       <Head>
-        <title>{title ? title + ' - BzkStore' : 'BzkStore'}</title>
+        <title>{title ? title + " - BzkStore" : "BzkStore"}</title>
         <meta name="description" content="Ecommerce Website" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
@@ -53,8 +53,8 @@ export default function Layout({ title, children }) {
                 </a>
               </Link>
 
-              {status === 'loading' ? (
-                'Loading'
+              {status === "loading" ? (
+                "Loading"
               ) : session?.user ? (
                 <Menu as="div" className="relative inline-block">
                   <Menu.Button className="text-blue-600">
@@ -71,7 +71,7 @@ export default function Layout({ title, children }) {
                         className="dropdown-link"
                         href="/order-history"
                       >
-                       Sipariş Geçmişi
+                        Sipariş Geçmişi
                       </DropdownLink>
                     </Menu.Item>
                     <Menu.Item>
@@ -80,7 +80,7 @@ export default function Layout({ title, children }) {
                         href="#"
                         onClick={logoutClickHandler}
                       >
-                       Çıkış Yap
+                        Çıkış Yap
                       </a>
                     </Menu.Item>
                   </Menu.Items>
